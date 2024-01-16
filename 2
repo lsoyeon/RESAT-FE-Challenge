@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Timer</title>
+</head>
+<body>
+    <h1>Countdown Timer</h1>
+    <div id="inputArea">
+        <input type="number" id="hours" placeholder="시간">
+        <input type="number" id="minutes" placeholder="분">
+        <input type="number" id="seconds" placeholder="초">
+    </div>
+    <button id="start">START</button>
+    <button id="stop">STOP</button>
+    <button id="reset">RESET</button>
+    <h2 id="timer"></h2>
+    
+    <script>
+        var intervalId;
+        var time;
+
+        function start() {
+            var hours = document.getElementById('hours').value;
+            var minutes = document.getElementById('minutes').value;
+            var seconds = document.getElementById('seconds').value;
+            
+            time = (hours * 3600) + (minutes * 60) + seconds;
+
+            intervalId = setInterval(function() {
+                time--;
+                var hoursLeft = Math.floor(time / 3600);
+                var minutesLeft = Math.floor((time % 3600) / 60);
+                var secondsLeft = time % 60;
+                
+                document.getElementById('timer').innerHTML = hoursLeft + "시간 " + minutesLeft + "분 " + secondsLeft + "초";
+                
+                if (time <= 0) {
+                    clearInterval(intervalId);
+                }
+            }, 1000);
+            
+            document.getElementById('inputArea').style.display = 'none';
+        }
+
+        function stop() {
+            clearInterval(intervalId);
+        }
+
+        function reset() {
+            clearInterval(intervalId);
+            document.getElementById('timer').innerHTML = '';
+            document.getElementById('inputArea').style.display = 'block';
+            document.getElementById('hours').value = '';
+            document.getElementById('minutes').value = '';
+            document.getElementById('seconds').value = '';
+        }
+
+        document.getElementById('start').addEventListener('click', start);
+        document.getElementById('stop').addEventListener('click', stop);
+        document.getElementById('reset').addEventListener('click', reset);
+    </script>
+</body>
+</html>
