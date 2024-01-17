@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .high { color: red; }
+    .medium { color: orange; }
+    .low { color: green; }
+  </style>
+</head>
+<body>
+  <div>
+    <input id="todoInput" type="text" placeholder="할 일을 입력하세요." />
+    <select id="prioritySelect">
+      <option value="low">낮음</option>
+      <option value="medium">보통</option>
+      <option value="high">높음</option>
+      <option value="veryHigh">아주 높음</option>
+    </select>
+    <button id="addButton">할 일 추가하기</button>
+  </div>
+  <div>
+    <ul id="todoList"></ul>
+  </div>
+
+  <script>
+    document.getElementById('addButton').addEventListener('click', function() {
+      var todoInput = document.getElementById('todoInput');
+      var prioritySelect = document.getElementById('prioritySelect');
+      var todoList = document.getElementById('todoList');
+
+      var newTodo = document.createElement('li');
+      newTodo.innerText = todoInput.value;
+      newTodo.classList.add(prioritySelect.value);
+
+      var editButton = document.createElement('button');
+      editButton.innerText = '수정';
+      editButton.addEventListener('click', function() {
+        var newTodoValue = prompt('새로운 할 일을 입력하세요.', newTodo.innerText);
+        if (newTodoValue) {
+          newTodo.innerText = newTodoValue;
+        }
+      });
+      newTodo.appendChild(editButton);
+
+      var doneCheckbox = document.createElement('input');
+      doneCheckbox.type = 'checkbox';
+      doneCheckbox.addEventListener('change', function() {
+        newTodo.style.textDecoration = doneCheckbox.checked ? 'line-through' : 'none';
+      });
+      newTodo.appendChild(doneCheckbox);
+
+      todoList.appendChild(newTodo);
+      todoInput.value = '';
+    });
+  </script>
+</body>
+</html>
